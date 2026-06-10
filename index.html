@@ -55,24 +55,6 @@
         .print-only { display: none; }
 
         @media print {
-
-                .print-only {
-        display: table-cell !important;
-
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-        white-space: nowrap;
-
-        width: 18px !important;
-        min-width: 18px !important;
-        max-width: 18px !important;
-
-        font-size: 9px !important;
-        text-align: center;
-        vertical-align: middle;
-        padding: 0 !important;
-    }
-        
             @page { size: A4 portrait; margin: 8mm; }
             .no-print { display: none; }
             .page { page-break-after: always; margin-bottom: 0; }
