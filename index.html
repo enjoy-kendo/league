@@ -59,6 +59,18 @@
             .no-print { display: none; }
             .page { page-break-after: always; margin-bottom: 0; }
             .page:last-child { page-break-after: avoid; }
+            
+            .print-only {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+            .print-only {
+    width: 22px;
+    font-size: 10px;
+}
            
             /* 印刷時の対戦番号 */
             .match-num {
