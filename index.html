@@ -57,20 +57,33 @@
             .no-print { display: none; }
             .page { page-break-after: always; margin-bottom: 0; }
             .page:last-child { page-break-after: avoid; }
+
             
 .print-only {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    white-space: nowrap;
+    display: none;
+}
 
-    width: 14px !important;
-    min-width: 14px !important;
+@media print {
 
-    padding: 2px 0 !important;
-    font-size: 9px !important;
+    .no-print { display: none; }
 
-    text-align: center;
-    vertical-align: middle;
+    .print-only {
+        display: table-cell !important;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        white-space: nowrap;
+
+        width: 22px !important;
+        min-width: 22px !important;
+        max-width: 22px !important;
+
+        padding: 2px 0 !important;
+        font-size: 10px !important;
+
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #333 !important;
+    }
 }
            
             /* 印刷時の対戦番号 */
