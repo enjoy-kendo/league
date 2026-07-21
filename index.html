@@ -6,7 +6,7 @@
     <title>リーグ戦対戦表</title>
     
     <!-- ========================================== -->
-    <!-- スタイルシート（見た目・印刷レイアウトの定義） -->
+    <!-- スタイルシート（見た目・レイアウトの定義） -->
     <!-- ========================================== -->
     <style>
         /* 共通基本スタイル */
@@ -24,7 +24,7 @@
         button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white; font-weight: bold; font-size: 14px; }
         button:disabled { background-color: #ccc; }
 
-        /* 出力エリア・対戦表のスタイル */
+        /* 出力エリア・対戦表の基本スタイル */
         .page { margin-bottom: 30px; }
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
         .date-display { font-size: 0.7em; color: #666; }
@@ -52,8 +52,8 @@
         }
         .print-only { display: none; }
 
-        /* ========================================== */
-        <!-- 印刷時専用のスタイル（A4縦・レイアウト調整） -->
+        <!-- ========================================== -->
+        <!-- 印刷時専用のスタイル（元のレイアウトを完全保持） -->
         <!-- ========================================== -->
         @media print {
             h2.section-title { font-size: 10pt !important; }
@@ -61,7 +61,7 @@
 
             .no-print { display: none; }
 
-            /* 参加者3〜7人のときだけ余白を入れる設定 */
+            /* 3〜7人のときだけ余白を入げる設定 */
             .page[data-n="3"] table,
             .page[data-n="4"] table,
             .page[data-n="5"] table,
@@ -86,6 +86,7 @@
             .page[data-n="9"] table { width: 100% !important; }
             .page[data-n="10"] table { width: 100% !important; }
 
+            /* 9〜10人のときの対戦順リストの調整 */
             .page[data-n="9"] .match-list-column table { font-size: 13px !important; }
             .page[data-n="9"] .match-list-column table td { height: 26px !important; }
             .page[data-n="10"] .match-list-column table { font-size: 11px !important; }
@@ -104,7 +105,7 @@
 <body>
 
     <!-- ========================================== -->
-    <!-- 入力フォームセクション -->
+    <!-- 入力フォームエリア -->
     <!-- ========================================== -->
     <div class="no-print">
         <h2>リーグ戦作成ツール</h2>
@@ -120,7 +121,7 @@
     <div id="output"></div>
 
     <!-- ========================================== -->
-    <!-- JavaScript（対戦表のロジック・描画処理） -->
+    <!-- JavaScript（ロジック・表描画処理） -->
     <!-- ========================================== -->
     <script>
         // 総当たり戦の組み合わせマトリックスデータ
@@ -135,15 +136,18 @@
             10: [[0, 1, 21, 14, 29, 35, 40, 12, 44, 10], [1, 0, 6, 22, 15, 30, 36, 41, 11, 45], [21, 6, 0, 2, 23, 16, 31, 37, 42, 13], [14, 22, 2, 0, 7, 24, 17, 32, 38, 43], [29, 15, 23, 7, 0, 3, 25, 18, 33, 39], [35, 30, 16, 24, 3, 0, 8, 26, 19, 34], [40, 36, 31, 17, 25, 8, 0, 4, 27, 20], [12, 41, 37, 32, 18, 26, 4, 0, 9, 28], [44, 11, 42, 38, 33, 19, 27, 9, 0, 5], [10, 45, 13, 43, 39, 34, 20, 28, 5, 0]]
         };
 
-        // 表および対戦順を生成するメイン関数
+        // 入力された参加者から対戦表と対戦順を生成する関数
         function generate() {
+            // テキストエリアから名前を取得し、空白行を除外
             const names = document.getElementById('names').value.split('\n').map(n => n.trim()).filter(n => n !== "");
             const n = names.length;
             if (n < 3 || n > 10) { alert("3〜10人で入力してください"); return; }
 
+            // 現在の日付を取得
             const now = new Date();
             const dateStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
 
+            // 対戦順のデータを構築・ソート
             const matrix = LEAGUE_TABLES[n];
             let matches = [];
             for (let i = 0; i < n; i++) {
@@ -154,10 +158,12 @@
             matches.sort((a, b) => a.originalNum - b.originalNum);
             matches.forEach((m, idx) => m.num = idx + 1);
 
+            // 印刷時の列数を決定（6〜8人は2列、9人以上は3列）
             let printCols = 1;
             if (n >= 6 && n <= 8) printCols = 2;
             else if (n >= 9) printCols = 3;
 
+            // 対戦表（マトリックス）のHTML生成
             let html = `<div class="page" data-n="${n}">` +
                         `<div class="section-header"><h2 class="section-title">対戦表（${n}人）</h2><div class="date-display">${dateStr}</div></div>` +
                         `<table><tr><th></th>`;
@@ -174,6 +180,7 @@
             }
             html += `</table><h2 class="section-title">対戦順</h2><div class="match-list-container">`;
 
+            // 対戦順リストのHTML生成
             const printColClass = `print-col-${printCols}`;
             const matchesPerCol = Math.ceil(matches.length / printCols);
 
@@ -185,6 +192,7 @@
             }
             html += `</div></div>`;
 
+            // 画面に出力を反映し、印刷ボタンを有効化
             document.getElementById('output').innerHTML = html;
             document.getElementById('printBtn').disabled = false;
             document.getElementById('printBtn').style.backgroundColor = '#28a745';
