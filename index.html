@@ -201,12 +201,12 @@
             
             .page table th, .page table td { border: 0 !important; border-right: 1px solid #333 !important; border-bottom: 1px solid #333 !important; height: 37px !important; font-size: 11px !important; }
             
-            /* ★「本数」「勝」「負」「分」「順位」のヘッダーだけを縦書きにする設定 */
+            /* ★「本数」「勝」「負」「分」「順位」の縦書き列：さらに幅をスリムに調整 */
             .page table th.print-only {
                 writing-mode: vertical-rl !important;
                 text-orientation: upright !important;
-                font-size: 9px !important;
-                padding: 2px 0 !important;
+                font-size: 8px !important;
+                padding: 1px 0 !important;
                 line-height: 1;
             }
 
@@ -223,8 +223,8 @@
 
             .match-list-column .match-num-col { width: 30px !important; }
 
-            /* 縦書きにしたことで列幅をさらにスリムに調整 */
-            .print-only { display: table-cell !important; width: 18px !important; }
+            /* ★ 印刷時の列幅をさらに細く設定（14pxに変更） */
+            .print-only { display: table-cell !important; width: 14px !important; }
             .diagonal-line { background: #eee !important; background-image: linear-gradient(to top right, transparent 49%, #666 50%, #666 51%, transparent 52%) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .match-list-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; }
             .print-col-1 { min-width: 50% !important; max-width: 50% !important; }
