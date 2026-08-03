@@ -70,8 +70,9 @@
             padding: 0;
         }
 
+        /* ★画面上では「本数」などの追加列を非表示にする */
         .print-only { display: none; }
-        .print-date { display: none; } /* 画面では非表示 */
+        .print-date { display: none; }
 
         /* ==========================================
             通常画面プレビュー用の高さ・フォントサイズ調整
@@ -201,7 +202,7 @@
             
             .page table th, .page table td { border: 0 !important; border-right: 1px solid #333 !important; border-bottom: 1px solid #333 !important; height: 37px !important; font-size: 11px !important; }
             
-            /* ★「本数」「勝」「負」「分」「順位」の縦書き列：さらに幅をスリムに調整 */
+            /* 印刷時：「本数」「勝」「負」「分」「順位」の縦書き列を表示＆スリムに設定 */
             .page table th.print-only {
                 writing-mode: vertical-rl !important;
                 text-orientation: upright !important;
@@ -223,7 +224,7 @@
 
             .match-list-column .match-num-col { width: 30px !important; }
 
-            /* ★ 印刷時の列幅をさらに細く設定（14pxに変更） */
+            /* 印刷時のみ列を表示し、幅を14pxに固定 */
             .print-only { display: table-cell !important; width: 14px !important; }
             .diagonal-line { background: #eee !important; background-image: linear-gradient(to top right, transparent 49%, #666 50%, #666 51%, transparent 52%) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .match-list-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; }
