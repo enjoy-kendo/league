@@ -18,86 +18,215 @@
         .form-group textarea { width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; height: 200px; }
 
         /* ボタン共通スタイル */
-        button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white; font-weight: bold; font-size: 14px; }
+        button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white; font-weight: bold; font-size: 14px; margin-right: 5px; margin-bottom: 5px; }
         button:disabled { background-color: #ccc; }
 
-        /* 各ページコンテナのスタイル */
-        .page { margin-bottom: 30px; }
-        .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+        /* フォーム切替ボタンのスタイル（対戦順テーブルのすぐ左下） */
+        .toggle-form-btn { 
+            background-color: #343a40; 
+            color: white; 
+            font-size: 12px;
+            padding: 4px 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .toggle-form-btn:hover { background-color: #23272b; }
+
+        /* 各ページコンテナの共通スタイル（画面用） */
+        .page { margin-bottom: 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
         .date-display { font-size: 0.7em; color: #666; }
 
-        /* セクションタイトルのスタイル */
-        h2.section-title { font-size: 1.2em; margin: 10px 0 !important; }
+        /* セクションタイトルのスタイル（画面用：タイトルの下余白を詰める調整） */
+        .page h2.section-title { font-size: 11pt; margin: 0 0 1px 0 !important; }
+        .page h2.match-list-title { margin-top: 10px !important; }
 
-        /* テーブル共通のスタイル */
-        table { border-collapse: collapse; width: 100%; table-layout: fixed; }
-        th, td { border: 1px solid #aaa; height: 30px; text-align: center; font-size: 11px; padding: 1px; position: relative; }
-        th { background: #eee; }
+        /* テーブル共通のスタイル（画面用） */
+        .page table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+        .page th, .page td { border: 1px solid #aaa; text-align: center; position: relative; }
+        .page th { background: #eee; }
 
-        /* 参加者名ヘッダーおよびセル内の調整 */
-        .name-header { overflow-wrap: break-word; word-break: break-all; line-height: 1.1; font-size: 11px; overflow: hidden; font-weight: normal; }
-        /* 自分自身の対戦マスの斜線スタイル */
+        /* 対戦順表の「赤」「白」などのヘッダーを細字にする設定 */
+        .match-list-column th { font-weight: normal; }
+
+        .name-header { overflow-wrap: break-word; word-break: break-all; line-height: 1.1; overflow: hidden; font-weight: normal; }
         .diagonal-line { background: #eee; background-image: linear-gradient(to top right, transparent 49%, #666 50%, #666 51%, transparent 52%); }
-        /* 対戦番号列の幅 */
-        .match-num-col { width: 35px; }
-        /* マス目の中央に表示する対戦番号のスタイル */
-        .match-num { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; color: #888; text-align: center; width: 100%; pointer-events: none; }
-        /* 対戦順リストのコンテナ */
-        .match-list-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px; }
-        .match-list-column { flex: 1; min-width: 100%; }
+        
+        .match-list-column .match-num-col { width: 24px; }
+        .match-list-column td:first-child { width: 24px; }
 
-        /* 画面表示時の対戦リストの調整 */
-        .match-list-column table th,
-        .match-list-column table td {
-            font-size: 13px !important;
-            height: 38px !important;
+        .match-num { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #888; text-align: center; width: 100%; pointer-events: none; font-size: 10px; }
+        
+        .match-list-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; }
+        .print-col-1 { min-width: 50%; max-width: 50%; }
+        .print-col-2 { min-width: 44%; flex: 1; }
+        .print-col-3 { min-width: 31%; max-width: 32%; flex: 1; }
+
+        .match-list-container table th,
+        .match-list-container table td {
+            height: 19px;
+            font-size: 9px;
+            padding: 0;
         }
-        /* 印刷時のみ表示する列の初期設定（画面では非表示） */
+
         .print-only { display: none; }
+        .print-date { display: none; } /* 画面では非表示 */
 
-        /* 印刷時のスタイル設定 */
+        /* ==========================================
+            通常画面プレビュー用の高さ・フォントサイズ調整
+           ========================================== */
+        .page[data-n="7"] table th, .page[data-n="7"] table td,
+        .page[data-n="8"] table th, .page[data-n="8"] table td,
+        .page[data-n="9"] table th, .page[data-n="9"] table td,
+        .page[data-n="10"] table th, .page[data-n="10"] table td { height: 21px; font-size: 9px; padding: 0; }
+
+        .page[data-n="3"] table th, .page[data-n="3"] table td,
+        .page[data-n="4"] table th, .page[data-n="4"] table td,
+        .page[data-n="5"] table th, .page[data-n="5"] table td,
+        .page[data-n="6"] table th, .page[data-n="6"] table td {
+            height: 30px;
+            font-size: 11px;
+            padding: 1px;
+        }
+
+        .page[data-n="3"] .match-list-column table th, .page[data-n="3"] .match-list-column table td,
+        .page[data-n="4"] .match-list-column table th, .page[data-n="4"] .match-list-column table td,
+        .page[data-n="5"] .match-list-column table th, .page[data-n="5"] .match-list-column table td,
+        .page[data-n="6"] .match-list-column table th, .page[data-n="6"] .match-list-column table td,
+        .page[data-n="7"] .match-list-column table th, .page[data-n="7"] .match-list-column table td {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        .page[data-n="8"] .match-list-column table th, 
+        .page[data-n="8"] .match-list-column table td {
+            height: 25px;
+        }
+
+        .page[data-n="9"] table th, .page[data-n="9"] table td,
+        .page[data-n="10"] table th, .page[data-n="10"] table td { height: 18px; font-size: 8px; }
+        
+        .page[data-n="9"] .match-list-column table th, 
+        .page[data-n="9"] .match-list-column table td { 
+            height: 30px; 
+            font-size: 9px; 
+        }
+
+        .page[data-n="10"] .match-list-column table th, 
+        .page[data-n="10"] .match-list-column table td { 
+            height: 23px; 
+            font-size: 9px; 
+        }
+
+
+        /* ==========================================
+            完全独立した実際の印刷時の設定（@media print）
+           ========================================== */
         @media print {
-            h2.section-title { font-size: 10pt !important; }
-            @page { size: A4 portrait; margin: 3mm 5mm 1mm 5mm; }
+            .no-print, .toggle-form-btn { display: none !important; }
+            
+            @page { size: A4 portrait; margin: 2mm 5mm 1mm 5mm; }
 
-            /* 印刷時にフォームエリアを非表示にする */
-            .no-print { display: none; }
-
-            /* 参加者人数（3〜7人）に応じた余白調整 */
-            .page[data-n="3"] table,
-            .page[data-n="4"] table,
-            .page[data-n="5"] table,
-            .page[data-n="6"] table,
-            .page[data-n="7"] table { 
-                margin-bottom: 20mm !important; 
+            .page {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                position: relative !important;
             }
 
-            .match-num { color: #666 !important; font-size: 7px !important; top: 4px; left: 5px; }
+            .section-header { position: relative !important; }
+            .date-display { display: none !important; }
+
+            /* 印刷時：対戦表テーブルの右端の延長上に日付を配置（テーブル幅と完全同期） */
+            .print-date {
+                display: block !important;
+                position: absolute !important;
+                top: 3px !important;
+                font-size: 8pt !important;
+                color: #333 !important;
+                white-space: nowrap !important;
+                transform: translateX(-100%) !important;
+            }
+
+            /* 人数ごとのテーブル幅とleftの位置を完全に一致させる */
+            .page[data-n="3"] table { width: 55% !important; }
+            .page[data-n="3"] .print-date { left: 55% !important; }
+
+            .page[data-n="4"] table { width: 65% !important; }
+            .page[data-n="4"] .print-date { left: 65% !important; }
+
+            .page[data-n="5"] table { width: 75% !important; }
+            .page[data-n="5"] .print-date { left: 75% !important; }
+
+            .page[data-n="6"] table { width: 85% !important; }
+            .page[data-n="6"] .print-date { left: 85% !important; }
+
+            .page[data-n="7"] table { width: 93% !important; }
+            .page[data-n="7"] .print-date { left: 93% !important; }
+
+            .page[data-n="8"] table { width: 97% !important; }
+            .page[data-n="8"] .print-date { left: 97% !important; }
+
+            .page[data-n="9"] table { width: 100% !important; }
+            .page[data-n="9"] .print-date { left: 100% !important; }
+
+            .page[data-n="10"] table { width: 100% !important; }
+            .page[data-n="10"] .print-date { left: 100% !important; }
+
+            .page h2.section-title { 
+                font-size: 9pt !important; 
+                margin-top: 3px !important; 
+                margin-bottom: 0px !important; 
+            }
+
+            .page h2.match-list-title {
+                font-size: 9pt !important; 
+                margin-top: 30px !important; 
+                margin-bottom: 3px !important;
+            }
+            
+            .page table td .match-num { 
+                position: absolute !important;
+                top: 3px !important; 
+                left: 4px !important; 
+                transform: none !important; 
+                text-align: left !important; 
+                width: auto !important; 
+                font-size: 7px !important; 
+                color: #666 !important; 
+            }
+            
             .page table th { background-color: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .page table { border-collapse: separate !important; border-spacing: 0 !important; border-left: 1px solid #333; border-top: 1px solid #333; }
-            .page table th, .page table td { border: 0 !important; border-right: 1px solid #333 !important; border-bottom: 1px solid #333 !important; height: 37px !important; }
-            .match-list-column table th, .match-list-column table td { height: 30px !important; font-size: 13px !important; }
+            
+            .page table th, .page table td { border: 0 !important; border-right: 1px solid #333 !important; border-bottom: 1px solid #333 !important; height: 37px !important; font-size: 11px !important; }
+            
+            /* ★「本数」「勝」「負」「分」「順位」のヘッダーだけを縦書きにする設定 */
+            .page table th.print-only {
+                writing-mode: vertical-rl !important;
+                text-orientation: upright !important;
+                font-size: 9px !important;
+                padding: 2px 0 !important;
+                line-height: 1;
+            }
 
-            /* 人数に応じた対戦表の幅の調整 */
-            .page[data-n="3"] table { width: 50% !important; }
-            .page[data-n="4"] table { width: 60% !important; }
-            .page[data-n="5"] table { width: 70% !important; }
-            .page[data-n="6"] table { width: 80% !important; }
-            .page[data-n="7"] table { width: 90% !important; }
-            .page[data-n="8"] table { width: 95% !important; }
-            .page[data-n="9"] table { width: 100% !important; }
-            .page[data-n="10"] table { width: 100% !important; }
+            .page[data-n="9"] .match-list-column table th, 
+            .page[data-n="9"] .match-list-column table td { height: 32px !important; font-size: 12px !important; }
+            .page[data-n="9"] .match-list-column td:first-child { font-size: 10px !important; width: 15px !important; }
 
-            /* 9人・10人の場合の対戦リストの文字サイズと高さ調整 */
-            .page[data-n="9"] .match-list-column table { font-size: 13px !important; }
-            .page[data-n="9"] .match-list-column table td { height: 26px !important; }
-            .page[data-n="10"] .match-list-column table { font-size: 11px !important; }
-            .page[data-n="10"] .match-list-column table td { height: 22px !important; }
+            .page[data-n="10"] .match-list-column table th, 
+            .page[data-n="10"] .match-list-column table td { height: 25px !important; font-size: 11px !important; }
+            .page[data-n="10"] .match-list-column td:first-child { font-size: 10px !important; width: 15px !important; }
 
-            .print-only { display: table-cell !important; width: 25px !important; }
+            .match-list-column table th, .match-list-column table td { height: 32px !important; font-size: 14px !important; }
+            .match-list-column td:first-child { font-size: 12px !important; width: 30px !important; }
+
+            .match-list-column .match-num-col { width: 30px !important; }
+
+            /* 縦書きにしたことで列幅をさらにスリムに調整 */
+            .print-only { display: table-cell !important; width: 18px !important; }
             .diagonal-line { background: #eee !important; background-image: linear-gradient(to top right, transparent 49%, #666 50%, #666 51%, transparent 52%) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-            .match-list-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; }
+            .match-list-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; }
             .print-col-1 { min-width: 50% !important; max-width: 50% !important; }
             .print-col-2 { min-width: 44% !important; }
             .print-col-3 { min-width: 29% !important; }
@@ -107,7 +236,7 @@
 <body>
 
     <!-- 入力・操作エリア -->
-    <div class="no-print">
+    <div id="formArea" class="no-print">
         <h2>リーグ戦作成ツール</h2>
         <div class="form-group">
             <label>参加者名（3〜10人、改行区切り）</label>
@@ -121,11 +250,6 @@
     <div id="output"></div>
 
     <script>
-        /* 
-          【設定：総当たり戦の対戦順マトリックス】
-          3人から10人までの各人数における対戦順序を定義しています。
-          人数を変更または拡張したい場合は、このオブジェクトに新しい行数を追加してください。
-        */
         const LEAGUE_TABLES = {
             3: [[0, 1, 3], [1, 0, 2], [3, 2, 0]],
             4: [[0, 1, 5, 3], [1, 0, 4, 6], [5, 4, 0, 2], [3, 6, 2, 0]],
@@ -137,61 +261,54 @@
             10: [[0, 1, 21, 14, 29, 35, 40, 12, 44, 10], [1, 0, 6, 22, 15, 30, 36, 41, 11, 45], [21, 6, 0, 2, 23, 16, 31, 37, 42, 13], [14, 22, 2, 0, 7, 24, 17, 32, 38, 43], [29, 15, 23, 7, 0, 3, 25, 18, 33, 39], [35, 30, 16, 24, 3, 0, 8, 26, 19, 34], [40, 36, 31, 17, 25, 8, 0, 4, 27, 20], [12, 41, 37, 32, 18, 26, 4, 0, 9, 28], [44, 11, 42, 38, 33, 19, 27, 9, 0, 5], [10, 45, 13, 43, 39, 34, 20, 28, 5, 0]]
         };
 
-        /* 
-          【関数：対戦表と対戦順リストを生成するメイン処理】
-          テキストエリアから入力された参加者名を取得し、バリデーションとHTMLの組み立てを行います。
-        */
         function generate() {
-            // テキストエリアの入力値を改行ごとに分割し、前後の空白削除と空行の除外を行う
-            const names = document.getElementById('names').value.split('\n').map(n => n.trim()).filter(n => n !== "");
+            const textarea = document.getElementById('names');
+            const names = textarea.value.split('\n').map(n => n.trim()).filter(n => n !== "");
             const n = names.length;
             
-            // 人数が3〜10人の範囲外である場合はアラートを表示して処理を中断する
             if (n < 3 || n > 10) { alert("3〜10人で入力してください"); return; }
 
-            // 現在の日付を取得し、YYYY/M/D形式の文字列に変換する
             const now = new Date();
             const dateStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
 
-            // 人数に応じた対戦マトリックスを取得
             const matrix = LEAGUE_TABLES[n];
             let matches = [];
             
-            // 全組み合わせの対戦ペアとマトリックス上の数値を抽出
             for (let i = 0; i < n; i++) {
                 for (let j = i + 1; j < n; j++) {
                     matches.push({ p1: names[i], p2: names[j], originalNum: matrix[i][j] });
                 }
             }
-            // originalNumの値をもとに昇順でソートし、通し番号（num）を割り振る
             matches.sort((a, b) => a.originalNum - b.originalNum);
             matches.forEach((m, idx) => m.num = idx + 1);
 
-            // 印刷時の対戦リストの列数を決定（6〜8人は2列、9人以上は3列、それ以外は1列）
             let printCols = 1;
             if (n >= 6 && n <= 8) printCols = 2;
             else if (n >= 9) printCols = 3;
 
-            // 対戦表のHTML構造の組み立てを開始
             let html = `<div class="page" data-n="${n}">` +
-                       `<div class="section-header"><h2 class="section-title">対戦表（${n}人・${matches.length}試合）</h2><div class="date-display">${dateStr}</div></div>` +
+                       `<div class="section-header">` +
+                       `<h2 class="section-title">対戦表（${n}人・${matches.length}試合）</h2>` +
+                       `<div class="date-display">${dateStr}</div>` +
+                       `<div class="print-date">${dateStr}</div>` +
+                       `</div>` +
                        `<table><tr><th></th>`;
             names.forEach(name => html += `<th class="name-header">${name}</th>`);
-            html += `<th class="print-only">勝</th><th class="print-only">負</th><th class="print-only">分</th><th class="print-only">順位</th></tr>`;
+            html += `<th class="print-only">本数</th><th class="print-only">勝</th><th class="print-only">負</th><th class="print-only">分</th><th class="print-only">順位</th></tr>`;
 
-            // マトリックス表の行と列を描画するループ
             for (let i = 0; i < n; i++) {
                 html += `<tr><th class="name-header">${names[i]}</th>`;
                 for (let j = 0; j < n; j++) {
                     const match = matches.find(m => (m.p1 === names[i] && m.p2 === names[j]) || (m.p1 === names[j] && m.p2 === names[i]));
-                    // 縦横が同じ交点（自分自身）の場合は斜線、それ以外は対戦番号を表示する
                     html += (i === j) ? `<td class="diagonal-line"></td>` : `<td><span class="match-num">${match ? match.num : ""}</span></td>`;
                 }
-                html += `<td class="print-only"></td><td class="print-only"></td><td class="print-only"></td><td class="print-only"></td></tr>`;
+                html += `<td class="print-only"></td><td class="print-only"></td><td class="print-only"></td><td class="print-only"></td><td class="print-only"></td></tr>`;
             }
-            html += `</table><h2 class="section-title">対戦順</h2><div class="match-list-container">`;
+            
+            html += `</table>` +
+                    `<h2 class="section-title match-list-title">対戦順</h2>` +
+                    `<div class="match-list-container">`;
 
-            // 対戦順リストの列ごとの分割と描画処理
             const printColClass = `print-col-${printCols}`;
             const matchesPerCol = Math.ceil(matches.length / printCols);
 
@@ -201,12 +318,27 @@
                 colMatches.forEach(m => html += `<tr><td>${m.num}</td><td>${m.p1}</td><td>${m.p2}</td></tr>`);
                 html += `</table></div>`;
             }
-            html += `</div></div>`;
 
-            // 生成したHTMLを画面上の出力エリアに反映し、印刷ボタンを有効化する
+            html += `</div>` +
+                    `<button id="toggleBtn" class="toggle-form-btn" onclick="toggleForm()">入力フォームを隠す</button>` +
+                    `</div>`;
+
             document.getElementById('output').innerHTML = html;
             document.getElementById('printBtn').disabled = false;
             document.getElementById('printBtn').style.backgroundColor = '#28a745';
+        }
+
+        // 入力フォームの表示・非表示を切り替える関数
+        function toggleForm() {
+            const formArea = document.getElementById('formArea');
+            const btn = document.getElementById('toggleBtn');
+            if (formArea.style.display === 'none') {
+                formArea.style.display = 'block';
+                btn.textContent = '入力フォームを隠す';
+            } else {
+                formArea.style.display = 'none';
+                btn.textContent = '入力フォームを表示する';
+            }
         }
     </script>
 </body>
