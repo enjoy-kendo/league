@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>リーグ戦対戦表</title>
     <style>
-        /* ページ全体とベースの文字設定（明朝体に指定） */
-        body { font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", "MS PMincho", serif; padding: 8px; margin: 0; background-color: #fff; color: #333; }
+        /* ページ全体とベースの文字設定（剣道に似合う堅格な明朝体＋文字間隔の補正） */
+        body { 
+            font-family: "游明朝", "Yu Mincho", "Hiragino Mincho ProN", "HG明朝E", "MS PMincho", "Noto Serif JP", serif; 
+            padding: 8px; 
+            margin: 0; 
+            background-color: #fff; 
+            color: #222; 
+            letter-spacing: -0.02em; /* 文字間隔をキュッと詰めて読みやすく */
+            line-height: 1.2;
+        }
 
         /* 入力フォームエリアのスタイル（画面表示用・印刷時は非表示） */
         .no-print { margin-bottom: 8px; background: #f9f9f9; padding: 10px; border-radius: 8px; }
-        h2 { margin-top: 0 !important; margin-bottom: 8px !important; font-size: 1.1em; }
+        h2 { margin-top: 0 !important; margin-bottom: 8px !important; font-size: 1.1em; letter-spacing: 0.05em; }
 
         /* 入力グループのスタイル */
         .form-group { margin-bottom: 8px; }
@@ -39,18 +47,18 @@
         .date-display { font-size: 0.7em; color: #666; }
 
         /* セクションタイトルのスタイル（画面用） */
-        .page h2.section-title { font-size: 11pt; margin: 0 0 1px 0 !important; }
+        .page h2.section-title { font-size: 11pt; margin: 0 0 1px 0 !important; font-weight: bold; }
         .page h2.match-list-title { margin-top: 10px !important; }
 
         /* テーブル共通のスタイル（画面用） */
         .page table { border-collapse: collapse; width: 100%; table-layout: fixed; }
-        .page th, .page td { border: 1px solid #aaa; text-align: center; position: relative; }
-        .page th { background: #eee; }
+        .page th, .page td { border: 1px solid #aaa; text-align: center; position: relative; letter-spacing: -0.03em; }
+        .page th { background: #eee; font-weight: bold; }
 
         /* 対戦順表の「赤」「白」などのヘッダーを細字にする設定 */
         .match-list-column th { font-weight: normal; }
 
-        .name-header { overflow-wrap: break-word; word-break: break-all; line-height: 1.1; overflow: hidden; font-weight: normal; }
+        .name-header { overflow-wrap: break-word; word-break: break-all; line-height: 1.05; overflow: hidden; font-weight: bold; }
         .diagonal-line { background: #eee; background-image: linear-gradient(to top right, transparent 49%, #666 50%, #666 51%, transparent 52%); }
         
         .match-list-column .match-num-col { width: 24px; }
@@ -124,6 +132,8 @@
             完全独立した実際の印刷時の設定（@media print）
            ========================================== */
         @media print {
+            body { letter-spacing: -0.03em; } /* 印刷時は文字幅をさらに最適化 */
+
             .no-print, .toggle-form-btn { display: none !important; }
             
             @page { size: A4 portrait; margin: 2mm 5mm 1mm 5mm; }
