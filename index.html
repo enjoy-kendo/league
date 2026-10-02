@@ -2,7 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- スマホでの自動ズーム・不要な拡大を防ぐため maximum-scale=1.0 を追加 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>リーグ戦対戦表</title>
     <style>
         /* ページ全体とベースの文字設定（入力フォーム等はゴシック体を維持） */
@@ -16,12 +17,12 @@
         .form-group { margin-bottom: 8px; }
         .form-group label { display: block; font-weight: bold; margin-bottom: 2px; font-size: 0.9em; }
         
-        /* ▼ テキストエリアの幅設定を変更した部分 ▼ */
+        /* テキストエリアのスタイル（font-size: 16px にして自動ズームを防止） */
         .form-group textarea { 
             width: 100%; 
-            max-width: 320px; /* 必要に応じて 250px 〜 500px などに調節してください */
+            max-width: 320px; 
             padding: 8px; 
-            font-size: 14px; 
+            font-size: 16px; /* 16px以上に設定してiOSの自動拡大を回避 */
             border: 1px solid #ccc; 
             border-radius: 4px; 
             box-sizing: border-box; 
